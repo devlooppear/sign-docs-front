@@ -11,7 +11,9 @@ import {
   List,
   ListItem,
   ListItemButton,
+  Box,
 } from "@mui/material";
+import Logo from "@/components/Logo/Logo";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -34,9 +36,14 @@ export default function Navbar() {
     <>
       <AppBar position="sticky">
         <Toolbar>
+          <Box display="flex" alignItems="center" mr={2}>
+            <Logo width={45} height={45} />
+          </Box>
+
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Navbar
           </Typography>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
