@@ -7,7 +7,7 @@ import HttpBackend from "i18next-http-backend";
 import { Languages, SUPPORTED_LANGUAGES } from "@/enum/language";
 import { getAppLanguage } from "@/common/utils/language";
 
-const DEFAULT_NAMESPACES = ["common"];
+const DEFAULT_NAMESPACES = ["common", "introduction"];
 
 i18n
   .use(HttpBackend)
