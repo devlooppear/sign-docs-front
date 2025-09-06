@@ -1,4 +1,7 @@
+import { AuthProvider } from "@/provider/auth/AuthContext";
+import AuthRouteGuard from "@/provider/auth/AuthRouteGuard";
 import I18nProvider from "@/provider/i18n/I18nProvider";
+import { ReactQueryProvider } from "@/provider/query/QueryProvider";
 import ThemeRegistry from "@/provider/theme/ThemeRegistry";
 import { MainLayout } from "@/template";
 import type { Metadata } from "next";
@@ -32,11 +35,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeRegistry>
-          <I18nProvider>
-            <MainLayout>{children}</MainLayout>
-          </I18nProvider>
-        </ThemeRegistry>
+        <ReactQueryProvider>
+          <AuthProvider>
+            <ThemeRegistry>
+              <I18nProvider>
+                <AuthRouteGuard>
+                  <MainLayout>{children}</MainLayout>
+                </AuthRouteGuard>
+              </I18nProvider>
+            </ThemeRegistry>
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
