@@ -7,5 +7,22 @@
     "dashboard": "Painel",
     "document": "Documentos",
     "profile": "Perfil"
+  },
+  "footer": {
+    "quickLinks": {
+      "title": "Links Rápidos",
+      "home": "Início",
+      "login": "Entrar",
+      "register": "Registrar",
+      "dashboard": "Painel",
+      "profile": "Perfil",
+      "notifications": "Notificações"
+    },
+    "contact": {
+      "title": "Contato",
+      "email": "iago.profissional.developer@gmail.com",
+      "phone": "+55 (11) 94186-7093"
+    },
+    "copyright": "© {{year}} Docs-Sign"
   }
 }
