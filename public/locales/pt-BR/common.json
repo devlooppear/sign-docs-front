@@ -1,1 +1,11 @@
-{}
+{
+  "navbar": {
+    "home": "Início",
+    "introduction": "Introdução",
+    "login": "Entrar",
+    "register": "Registrar",
+    "dashboard": "Painel",
+    "document": "Documentos",
+    "profile": "Perfil"
+  }
+}

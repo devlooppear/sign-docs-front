@@ -1,3 +1,5 @@
+import { UserRole } from "@/enum/userRole";
+
 export enum Routes {
   HOME = "/",
   INTRODUCTION = "/introduction",
@@ -7,3 +9,15 @@ export enum Routes {
   DOCUMENT = "/document",
   PROFILE = "/profile",
 }
+
+export const unsignedRoutes = [
+  Routes.HOME,
+  Routes.INTRODUCTION,
+  Routes.LOGIN,
+  Routes.REGISTER,
+];
+
+export const signedRoutes = {
+  [UserRole.CLIENT]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
+  [UserRole.ADMIN]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
+};
