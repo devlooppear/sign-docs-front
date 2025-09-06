@@ -1,0 +1,18 @@
+{
+  "title": "Registro",
+  "name": "Nome",
+  "email": "E-mail",
+  "password": "Senha",
+  "document_number": "CPF",
+  "cpf_info": "O CPF é importante para validar a autenticidade da pessoa que está assinando.",
+  "register": "Registrar",
+  "required_name": "Nome obrigatório",
+  "required_email": "E-mail obrigatório",
+  "invalid_email": "E-mail inválido",
+  "required_password": "Senha obrigatória",
+  "invalid_password": "Senha deve ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e caractere especial",
+  "required_document": "CPF ou CNPJ obrigatório",
+  "invalid_document": "CPF ou CNPJ inválido",
+  "register_error": "Erro ao registrar",
+  "email_in_use": "Erro ao registrar. Tente outro e-mail."
+}

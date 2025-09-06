@@ -141,7 +141,6 @@ export default function Navbar() {
         ))}
       </List>
 
-      {/* Auth routes no final, só se não estiver logado */}
       {!isLogged && (
         <List>
           {authRoutes.map((route, index) => (
@@ -171,7 +170,6 @@ export default function Navbar() {
         </List>
       )}
 
-      {/* Se logado, mostra usuário e botão de logout */}
       {isLogged && (
         <Box sx={{ p: 2, borderTop: `1px solid ${systemColors.indigo[500]}` }}>
           <Typography
