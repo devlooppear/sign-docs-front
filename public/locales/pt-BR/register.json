@@ -5,6 +5,8 @@
   "password": "Senha",
   "document_number": "CPF",
   "cpf_info": "O CPF é importante para validar a autenticidade da pessoa que está assinando.",
+  "generic_error": "Por favor, confira os dados do formulário e tente novamente.",
+  "unknown_error": "Erro desconhecido. Por favor, confira os dados do formulário.",
   "register": "Registrar",
   "required_name": "Nome obrigatório",
   "required_email": "E-mail obrigatório",

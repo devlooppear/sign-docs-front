@@ -1,13 +1,15 @@
 {
-	"title": "Login",
-	"email": "E-mail",
-	"password": "Senha",
-	"login": "Entrar",
-	"register": "Registrar",
-	"invalid_email": "E-mail inválido",
-	"required_email": "E-mail obrigatório",
-	"required_password": "Senha obrigatória",
-	"invalid_password": "Senha deve ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e caractere especial",
-	"login_error": "Erro ao fazer login",
-	"invalid_credentials": "Usuário ou senha inválidos"
+  "title": "Login",
+  "email": "E-mail",
+  "password": "Senha",
+  "login": "Entrar",
+  "register": "Registrar",
+  "invalid_email": "E-mail inválido",
+  "required_email": "E-mail obrigatório",
+  "required_password": "Senha obrigatória",
+  "invalid_password": "Senha deve ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e caractere especial",
+  "login_error": "Erro ao fazer login",
+  "invalid_credentials": "Usuário ou senha inválidos",
+  "generic_error": "Por favor, confira os dados do formulário e tente novamente.",
+  "unknown_error": "Erro desconhecido. Por favor, confira os dados do formulário."
 }

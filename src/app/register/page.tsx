@@ -22,6 +22,7 @@ import { cpf } from "cpf-cnpj-validator";
 import { RegisterForm } from "./interface";
 import { onlyNumbers } from "@/common/utils/format";
 import { useTranslation } from "react-i18next";
+import { flashMessage } from "@/common/utils/flash-message";
 
 const RegisterCard: React.FC = () => {
   const { t } = useTranslation("register");
@@ -67,10 +68,12 @@ const RegisterCard: React.FC = () => {
       };
       await registerAsync(formattedData);
     } catch (err: any) {
-      setError("email", {
-        type: "manual",
-        message: "Erro ao registrar. Tente outro e-mail.",
-      });
+      const backendMsg = err?.response?.data?.message || err?.message;
+      if (err?.response?.status) {
+        flashMessage.error(`Erro ${err.response.status}: ${backendMsg || t("generic_error")}`);
+      } else {
+        flashMessage.error(backendMsg || t("unknown_error"));
+      }
     }
   };
 

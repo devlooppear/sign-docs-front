@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { STRONG_PASSWORD_REGEX } from "@/common/constants/validation";
 import { useTranslation } from "react-i18next";
+import { flashMessage } from "@/common/utils/flash-message";
 
 interface LoginForm {
   email: string;
@@ -57,6 +58,12 @@ const LoginCard: React.FC = () => {
     try {
       await loginAsync(data);
     } catch (err: any) {
+      const backendMsg = err?.response?.data?.message || err?.message;
+      if (err?.response?.status) {
+        flashMessage.error(`Erro ${err.response.status}: ${backendMsg || t("generic_error")}`);
+      } else {
+        flashMessage.error(backendMsg || t("unknown_error"));
+      }
       setError("email", { message: t("invalid_credentials") });
       setError("password", { message: t("invalid_credentials") });
     }
