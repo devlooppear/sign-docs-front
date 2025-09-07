@@ -8,6 +8,7 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaTachometerAlt,
+  FaPenNib,
 } from "react-icons/fa";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -53,6 +54,7 @@ export default function Navbar() {
       },
       [Routes.DOCUMENT]: { labelKey: "navbar.document", icon: <FaFileAlt /> },
       [Routes.PROFILE]: { labelKey: "navbar.profile", icon: <FaUser /> },
+      [Routes.TO_SIGN]: { labelKey: "navbar.toSign", icon: <FaPenNib /> },
       [Routes.LOGIN]: { labelKey: "navbar.login", icon: <FaSignInAlt /> },
       [Routes.REGISTER]: { labelKey: "navbar.register", icon: <FaUserPlus /> },
     };

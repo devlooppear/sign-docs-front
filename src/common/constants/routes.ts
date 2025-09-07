@@ -8,6 +8,7 @@ export enum Routes {
   DASHBOARD = "/dashboard",
   DOCUMENT = "/document",
   PROFILE = "/profile",
+  TO_SIGN = "/to-sign",
 }
 
 export const unsignedRoutes = [
@@ -18,6 +19,11 @@ export const unsignedRoutes = [
 ];
 
 export const signedRoutes = {
-  [UserRole.CLIENT]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
+  [UserRole.CLIENT]: [
+    Routes.DASHBOARD,
+    Routes.DOCUMENT,
+    Routes.PROFILE,
+    Routes.TO_SIGN,
+  ],
   [UserRole.ADMIN]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
 };

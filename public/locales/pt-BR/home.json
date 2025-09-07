@@ -1,0 +1,25 @@
+{
+	"greeting": "Olá, {{name}}!",
+	"visitor": "Visitante",
+	"chooseOption": "Escolha uma das opções abaixo para continuar:",
+	"toSign": {
+		"label": "Documentos para Assinar",
+		"description": "Veja os documentos pendentes e assine de forma rápida e segura.",
+		"buttonLabel": "Assinar Documentos"
+	},
+	"dashboard": {
+		"label": "Painel",
+		"description": "Acompanhe métricas e informações importantes do sistema.",
+		"buttonLabel": "Ir ao Painel"
+	},
+	"documents": {
+		"label": "Meus Documentos",
+		"description": "Acesse todos os documentos que você possui no sistema.",
+		"buttonLabel": "Ver Documentos"
+	},
+	"profile": {
+		"label": "Perfil",
+		"description": "Atualize suas informações e configure sua conta.",
+		"buttonLabel": "Ver Perfil"
+	}
+}

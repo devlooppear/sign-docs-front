@@ -6,7 +6,8 @@
     "register": "Registrar",
     "dashboard": "Painel",
     "document": "Documentos",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "toSign": "Assinar"
   },
   "footer": {
     "quickLinks": {
@@ -15,8 +16,7 @@
       "login": "Entrar",
       "register": "Registrar",
       "dashboard": "Painel",
-      "profile": "Perfil",
-      "notifications": "Notificações"
+      "profile": "Perfil"
     },
     "contact": {
       "title": "Contato",
@@ -24,5 +24,10 @@
       "phone": "+55 (11) 94186-7093"
     },
     "copyright": "© {{year}} Docs-Sign"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Ops! A página que você está procurando não existe ou foi movida.",
+    "button": "Voltar para Home"
   }
 }
