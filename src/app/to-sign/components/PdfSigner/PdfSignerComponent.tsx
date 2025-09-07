@@ -2,13 +2,16 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { Document, Page, pdfjs } from "react-pdf";
 import { Box, Typography } from "@mui/material";
 import systemColors from "@/common/constants/systemColors";
 
-if (typeof window !== "undefined" && "Worker" in window) {
-  pdfjs.GlobalWorkerOptions.workerSrc = "/assets/pdf.worker.min.js";
-}
+const Document = dynamic(
+  () => import("react-pdf").then((mod) => mod.Document),
+  { ssr: false }
+);
+const Page = dynamic(() => import("react-pdf").then((mod) => mod.Page), {
+  ssr: false,
+});
 
 interface PdfSignerProps {
   url: string;
@@ -25,6 +28,12 @@ const PdfSignerComponent: React.FC<PdfSignerProps> = ({
   const canvasRefs = useRef<Array<HTMLCanvasElement | null>>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>(width);
+
+  useEffect(() => {
+    import("react-pdf").then((mod) => {
+      mod.pdfjs.GlobalWorkerOptions.workerSrc = "/assets/pdf.worker.min.js";
+    });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
