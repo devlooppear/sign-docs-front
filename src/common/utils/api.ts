@@ -1,4 +1,8 @@
-import axios, { AxiosInstance } from "axios";
+import axios, {
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+  AxiosHeaders,
+} from "axios";
 
 const getToken = (): string | null => {
   if (typeof window !== "undefined") {
@@ -9,22 +13,26 @@ const getToken = (): string | null => {
 
 const api: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 api.interceptors.request.use(
-  (config) => {
-    const token = getToken();
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    if (!config.headers) {
+      config.headers = new AxiosHeaders();
     }
+
+    const token = getToken();
+    if (token) {
+      config.headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    if (config.data instanceof FormData) {
+      config.headers.delete("Content-Type");
+    }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(

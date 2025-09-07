@@ -7,8 +7,9 @@ import systemColors from "@/common/constants/systemColors";
 import { SubmitButtonProps } from "./interface";
 
 const StyleButton = styled(Button, {
-  shouldForwardProp: (prop) => prop !== "uppercase" && prop !== "variant",
-})<{ uppercase?: boolean; variant?: "contained" | "outlined" }>(
+  shouldForwardProp: (prop) =>
+    prop !== "uppercase" && prop !== "variant" && prop !== "htmlFor",
+})<{ uppercase?: boolean; variant?: "contained" | "outlined"; htmlFor?: string }>(
   ({ uppercase, variant }) => ({
     borderRadius: "12px",
     padding: "12px 20px",
@@ -56,14 +57,16 @@ export default function StyledButton({
   label,
   uppercase = true,
   variant = "contained",
+  htmlFor,
   ...props
-}: SubmitButtonProps & { variant?: "contained" | "outlined" }) {
+}: SubmitButtonProps & { variant?: "contained" | "outlined"; htmlFor?: string }) {
   return (
     <StyleButton
       type="submit"
       variant={variant}
       disabled={isLoading || props.disabled}
       uppercase={uppercase}
+      htmlFor={htmlFor}
       {...props}
     >
       {isLoading ? (
