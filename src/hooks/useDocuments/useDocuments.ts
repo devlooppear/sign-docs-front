@@ -1,5 +1,6 @@
-import { useQuery } from '../useQuery/useQuery';
-import { endpoints } from '@/common/constants/endpoints';
+import { useQuery } from "../useQuery/useQuery";
+import { endpoints } from "@/common/constants/endpoints";
+import { DocumentStatus } from "@/enum/document-status";
 
 export interface DocumentItem {
   id: number;
@@ -13,7 +14,7 @@ export interface DocumentItem {
     person_type: string;
     document_number: string;
   };
-  status: string;
+  status: DocumentStatus;
   created_at: string;
   updated_at: string;
   url: string;
@@ -21,7 +22,7 @@ export interface DocumentItem {
 
 export interface DocumentsResponse {
   data: DocumentItem[];
-  metadata?: {
+  metadata: {
     page: number;
     size: number;
     totalItems: number;
@@ -31,18 +32,43 @@ export interface DocumentsResponse {
   };
 }
 
-export function useDocuments(params?: { page?: number; limit?: number; status?: string }) {
-  const query = useQuery<{ data?: DocumentItem[]; metadata?: any }>({
-    queryKey: ['documents', params],
+interface UseDocumentsParams {
+  page?: number;
+  limit?: number;
+  status?: DocumentStatus;
+}
+
+export function useDocuments(params: UseDocumentsParams = {}) {
+  const { page = 1, limit = 10, status } = params;
+
+  const query = useQuery<{ data: DocumentItem[]; metadata: any }>({
+    queryKey: ["documents", { page, limit, status }],
     endpoint: endpoints.documents.root,
-    params,
+    params: { page, limit, status },
   });
 
-  const raw = query.data ?? {};
+  const raw = query.data ?? {
+    data: [],
+    metadata: {
+      page,
+      size: limit,
+      totalItems: 0,
+      totalPages: 0,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
+  };
 
   const mappedData: DocumentsResponse = {
-    data: Array.isArray(raw) ? raw : raw.data ?? [],
-    metadata: Array.isArray(raw) ? undefined : raw.metadata,
+    data: raw.data ?? [],
+    metadata: raw.metadata ?? {
+      page,
+      size: limit,
+      totalItems: 0,
+      totalPages: 0,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
   };
 
   return {

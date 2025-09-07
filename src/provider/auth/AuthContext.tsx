@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, {
   createContext,
@@ -14,6 +14,7 @@ import {
 } from "@/hooks/useLogin/useLogin";
 import { useNavTo } from "@/hooks/useNavTo/useNavTo";
 import { Routes } from "@/common/constants/routes";
+import Loader from "@/components/Loader/Loader";
 
 interface AuthContextType {
   token: string | null;
@@ -32,19 +33,33 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [token, setToken] = useState<string | null>(
-    typeof window !== "undefined" ? localStorage.getItem("token") : null
-  );
-  const [user, setUser] = useState<LoginResponse["user"] | null>(
-    typeof window !== "undefined" && localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user")!)
-      : null
-  );
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<LoginResponse["user"] | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   const { navTo } = useNavTo();
   const { mutate, mutateAsync, isPending, isError, error, data } = useLogin();
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const localToken = localStorage.getItem("token");
+      const localUser = localStorage.getItem("user");
+      setToken(localToken);
+      setUser(localUser ? JSON.parse(localUser) : null);
+    } catch (err) {
+      console.warn("Erro ao ler localStorage:", err);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } finally {
+      setIsReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const onStorage = (e: StorageEvent) => {
       if (e.key === "token") {
         const localToken = localStorage.getItem("token");
@@ -55,19 +70,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     window.addEventListener("storage", onStorage);
 
-    let interval: NodeJS.Timeout | number | undefined;
-    if (typeof window !== "undefined") {
-      interval = setInterval(() => {
-        const localToken = localStorage.getItem("token");
-        if (localToken !== token) {
-          logout();
-        }
-      }, 1000);
-    }
+    const interval = setInterval(() => {
+      const localToken = localStorage.getItem("token");
+      if (localToken !== token) logout();
+    }, 1000);
 
     return () => {
       window.removeEventListener("storage", onStorage);
-      if (interval) clearInterval(interval as number);
+      clearInterval(interval);
     };
   }, [token]);
 
@@ -80,9 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [data]);
 
-  const login = (variables: LoginVariables) => {
-    mutate(variables);
-  };
+  const login = (variables: LoginVariables) => mutate(variables);
 
   const loginAsync = async (variables: LoginVariables) => {
     const result = await mutateAsync(variables);
@@ -111,6 +119,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }),
     [token, user, isPending, isError, error]
   );
+
+  if (!isReady || isPending) {
+    return <Loader inAll />;
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
