@@ -4,17 +4,26 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Typography, Box, Divider } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import StyledButton from "@/components/StyledButton/StyledButton";
 import { useUploadDocument } from "@/hooks/useUploadDocument/useUploadDocument";
 import { useTranslation } from "react-i18next";
 import { StyledFileSelect } from "@/components/StyledFileSelect/StyledFileSelect";
+import { SignDocsSteps } from "@/enum/sign-docs";
 
 type FormValues = {
   file: FileList | null;
 };
 
-export const UploadDocumentForm: React.FC = () => {
+interface UploadDocumentFormProps {
+  setStep: (step: SignDocsSteps) => void;
+  setDocument: (doc: any) => void;
+}
+
+export const UploadDocumentForm: React.FC<UploadDocumentFormProps> = ({
+  setStep,
+  setDocument,
+}) => {
   const { t } = useTranslation("to-sign");
   const { upload, loading, error, data } = useUploadDocument();
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -34,25 +43,29 @@ export const UploadDocumentForm: React.FC = () => {
       }),
   });
 
-  const { control, handleSubmit, formState, reset, setValue } =
-    useForm<FormValues>({
-      resolver: yupResolver(schema),
-      defaultValues: { file: null },
-    });
+  const { control, handleSubmit, formState, reset } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: { file: null },
+  });
 
   const onSubmit = async (values: FormValues) => {
     if (!values.file || values.file.length === 0) return;
     try {
-      await upload({ file: values.file[0] });
+      const res = await upload({ file: values.file[0] });
+
       setUploadSuccess(true);
       reset();
+
+      if (res?.document) {
+        setDocument({
+          ...res.document,
+          url: res.url,
+        });
+        setStep(SignDocsSteps.SIGN);
+      }
     } catch {
       setUploadSuccess(false);
     }
-  };
-
-  const removeFile = () => {
-    setValue("file", null);
   };
 
   return (
@@ -101,15 +114,6 @@ export const UploadDocumentForm: React.FC = () => {
         <Typography color="success.main">{t("success")}</Typography>
       )}
       {error && <Typography color="error">{t("error")}</Typography>}
-
-      {data?.url && (
-        <Typography>
-          {t("file_url")}{" "}
-          <a href={data.url} target="_blank" rel="noopener noreferrer">
-            {data.name}
-          </a>
-        </Typography>
-      )}
     </Box>
   );
 };
