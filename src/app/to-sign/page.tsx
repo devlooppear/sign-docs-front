@@ -14,8 +14,8 @@ import { StyledCard } from "@/components/StyledCard/StyledCard";
 import { UploadDocumentForm } from "./components/UploadDocumentForm/UploadDocumentForm";
 import { SignDocsSteps } from "@/enum/signDocs";
 import { useAssignDocument } from "@/hooks/useAssignDocument/useAssignDocument";
-import { PdfSigner } from "./components/PdfSigner/PdfSigner";
 import { Done } from "./components/Done/Done";
+import { PdfSigner } from "./components/PdfSigner/PdfSigner";
 
 const STORAGE_KEY = "sign-docs-step";
 const DOCUMENT_STORAGE_KEY = "sign-docs-document";
