@@ -9,6 +9,7 @@ import {
   FaUserPlus,
   FaTachometerAlt,
   FaPenNib,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -190,6 +191,9 @@ export default function Navbar() {
               "&:hover": { backgroundColor: systemColors.indigo[800] },
             }}
           >
+            <ListItemIcon sx={{ color: "inherit", minWidth: 28 }}>
+              <FaSignOutAlt />
+            </ListItemIcon>
             <Typography>
               {t("navbar.logout", { defaultValue: "Logout" })}
             </Typography>

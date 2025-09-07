@@ -19,11 +19,6 @@ export const unsignedRoutes = [
 ];
 
 export const signedRoutes = {
-  [UserRole.CLIENT]: [
-    Routes.DASHBOARD,
-    Routes.DOCUMENT,
-    Routes.PROFILE,
-    Routes.TO_SIGN,
-  ],
+  [UserRole.CLIENT]: [Routes.DOCUMENT, Routes.PROFILE, Routes.TO_SIGN],
   [UserRole.ADMIN]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
 };
