@@ -12,13 +12,22 @@ export enum Routes {
 }
 
 export const unsignedRoutes = [
-  Routes.HOME,
   Routes.INTRODUCTION,
   Routes.LOGIN,
   Routes.REGISTER,
 ];
 
 export const signedRoutes = {
-  [UserRole.CLIENT]: [Routes.DOCUMENT, Routes.PROFILE, Routes.TO_SIGN],
-  [UserRole.ADMIN]: [Routes.DASHBOARD, Routes.DOCUMENT, Routes.PROFILE],
+  [UserRole.CLIENT]: [
+    Routes.DOCUMENT,
+    Routes.PROFILE,
+    Routes.TO_SIGN,
+    Routes.HOME,
+  ],
+  [UserRole.ADMIN]: [
+    Routes.DASHBOARD,
+    Routes.DOCUMENT,
+    Routes.PROFILE,
+    Routes.HOME,
+  ],
 };

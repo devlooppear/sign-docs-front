@@ -6,11 +6,8 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { Box, Typography } from "@mui/material";
 import systemColors from "@/common/constants/systemColors";
 
-if (typeof window !== "undefined") {
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.js",
-    import.meta.url
-  ).toString();
+if (typeof window !== "undefined" && "Worker" in window) {
+  pdfjs.GlobalWorkerOptions.workerSrc = "/assets/pdf.worker.min.js";
 }
 
 interface PdfSignerProps {

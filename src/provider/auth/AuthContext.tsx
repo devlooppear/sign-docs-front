@@ -40,46 +40,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const { navTo } = useNavTo();
   const { mutate, mutateAsync, isPending, isError, error, data } = useLogin();
 
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navTo(Routes.INTRODUCTION, { replace: true });
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     try {
       const localToken = localStorage.getItem("token");
       const localUser = localStorage.getItem("user");
       setToken(localToken);
       setUser(localUser ? JSON.parse(localUser) : null);
     } catch (err) {
-      console.warn("Erro ao ler localStorage:", err);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      logout();
     } finally {
       setIsReady(true);
     }
   }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === "token") {
-        const localToken = localStorage.getItem("token");
-        if (localToken !== token) {
-          logout();
-        }
-      }
-    };
-    window.addEventListener("storage", onStorage);
-
-    const interval = setInterval(() => {
-      const localToken = localStorage.getItem("token");
-      if (localToken !== token) logout();
-    }, 1000);
-
-    return () => {
-      window.removeEventListener("storage", onStorage);
-      clearInterval(interval);
-    };
-  }, [token]);
 
   useEffect(() => {
     if (data?.token) {
@@ -91,19 +72,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [data]);
 
   const login = (variables: LoginVariables) => mutate(variables);
-
-  const loginAsync = async (variables: LoginVariables) => {
-    const result = await mutateAsync(variables);
-    return result;
-  };
-
-  const logout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navTo(Routes.INTRODUCTION, { replace: true });
-  };
+  const loginAsync = async (variables: LoginVariables) =>
+    mutateAsync(variables);
 
   const value = useMemo(
     () => ({
@@ -120,9 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     [token, user, isPending, isError, error]
   );
 
-  if (!isReady || isPending) {
-    return <Loader inAll />;
-  }
+  if (!isReady || isPending) return <Loader inAll />;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

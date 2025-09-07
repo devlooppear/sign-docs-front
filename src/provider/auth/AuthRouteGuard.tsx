@@ -10,18 +10,40 @@ import {
   signedRoutes,
 } from "@/common/constants/routes";
 import { UserRole } from "@/enum/userRole";
+import { useMe } from "@/hooks/useMe/useMe";
 
 export default function AuthRouteGuard({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isLogged, user } = useAuth();
+  const { isLogged, user, logout } = useAuth();
   const { navTo } = useNavTo();
   const pathname = usePathname();
+  const { refetch } = useMe();
+
+  useEffect(() => {
+    if (!isLogged) return;
+
+    const checkToken = async () => {
+      try {
+        await refetch();
+      } catch (err: any) {
+        if (err?.response?.status === 401 || err?.response?.status === 403) {
+          logout();
+        }
+      }
+    };
+
+    checkToken();
+    const interval = setInterval(checkToken, 15 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [isLogged, refetch, logout]);
 
   useEffect(() => {
     const allSigned = Object.values(signedRoutes).flat();
+
     if (!isLogged && allSigned.includes(pathname as Routes)) {
       navTo(Routes.INTRODUCTION, { replace: true });
       return;
