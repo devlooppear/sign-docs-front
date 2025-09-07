@@ -20,12 +20,15 @@ import StyledCardContainer from "@/components/StyledCardContainer/StyledCardCont
 import { useDocuments } from "@/hooks/useDocuments/useDocuments";
 import { DocumentStatus } from "@/enum/document-status";
 import systemColors from "@/common/constants/systemColors";
+import { useTranslation } from "react-i18next";
 
 const DocumentPage = () => {
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
     pageSize: 10,
   });
+
+  const { t } = useTranslation("document");
 
   const [statusFilter, setStatusFilter] = useState<DocumentStatus | "">("");
 
@@ -48,20 +51,23 @@ const DocumentPage = () => {
   }));
 
   const columns: GridColDef<any>[] = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Nome do Documento", flex: 1 },
-    { field: "uploaded_by_name", headerName: "Enviado por", flex: 1 },
+    { field: "id", headerName: t("table.id"), width: 70 },
+    { field: "name", headerName: t("table.documentName"), flex: 1 },
+    { field: "uploaded_by_name", headerName: t("table.uploadedBy"), flex: 1 },
     {
       field: "status",
-      headerName: "Status",
+      headerName: t("table.status"),
       width: 140,
       type: "singleSelect",
-      valueOptions: [DocumentStatus.AVAILABLE, DocumentStatus.SIGNED],
+      valueOptions: [
+        { value: DocumentStatus.AVAILABLE, label: t("status.available") },
+        { value: DocumentStatus.SIGNED, label: t("status.signed") },
+      ],
       renderCell: (params: GridRenderCellParams<any>) => {
         const isSigned = params.row.status === DocumentStatus.SIGNED;
         return (
           <Chip
-            label={params.row.status}
+            label={t(`status.${params.row.status.toLowerCase()}`)}
             size="small"
             sx={{
               backgroundColor: isSigned
@@ -76,11 +82,10 @@ const DocumentPage = () => {
         );
       },
     },
-
-    { field: "created_at_fmt", headerName: "Criado em", width: 180 },
+    { field: "created_at_fmt", headerName: t("table.createdAt"), width: 180 },
     {
       field: "url",
-      headerName: "Ações",
+      headerName: t("table.actions"),
       width: 120,
       renderCell: (params: GridRenderCellParams<any>) => (
         <a
@@ -98,7 +103,7 @@ const DocumentPage = () => {
           }
           onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
         >
-          Abrir
+          {t("actions.open")}
         </a>
       ),
     },
@@ -107,19 +112,19 @@ const DocumentPage = () => {
   return (
     <StyledCardContainer>
       <Typography variant="h4" gutterBottom color={systemColors.indigo[800]}>
-        Documentos
+        {t("title")}
       </Typography>
 
       <FormControl sx={{ mb: 2, minWidth: 180 }}>
-        <InputLabel>Status</InputLabel>
+        <InputLabel>{t("filter.status")}</InputLabel>
         <Select
           value={statusFilter}
-          label="Status"
+          label={t("filter.status")}
           onChange={(e) => setStatusFilter(e.target.value as DocumentStatus)}
         >
-          <MenuItem value="">Todos</MenuItem>
-          <MenuItem value={DocumentStatus.AVAILABLE}>Disponível</MenuItem>
-          <MenuItem value={DocumentStatus.SIGNED}>Assinado</MenuItem>
+          <MenuItem value="">{t("filter.all")}</MenuItem>
+          <MenuItem value={DocumentStatus.AVAILABLE}>{t("status.available")}</MenuItem>
+          <MenuItem value={DocumentStatus.SIGNED}>{t("status.signed")}</MenuItem>
         </Select>
       </FormControl>
 

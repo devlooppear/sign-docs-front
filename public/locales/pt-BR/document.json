@@ -1,0 +1,22 @@
+{
+  "title": "Documentos",
+  "filter": {
+    "status": "Status",
+    "all": "Todos"
+  },
+  "table": {
+    "id": "ID",
+    "documentName": "Nome do Documento",
+    "uploadedBy": "Enviado por",
+    "status": "Status",
+    "createdAt": "Criado em",
+    "actions": "Ações"
+  },
+  "status": {
+    "available": "Disponível",
+    "signed": "Assinado"
+  },
+  "actions": {
+    "open": "Abrir"
+  }
+}
