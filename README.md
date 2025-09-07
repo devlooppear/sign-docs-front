@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📄 Plataforma de Assinatura Digital - Frontend
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-14.x-black?logo=next.js)
+![React](https://img.shields.io/badge/React-18.x-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
+![Material-UI](https://img.shields.io/badge/Material--UI-5.x-blue?logo=mui)
+![Status](https://img.shields.io/badge/Desafio%20T%C3%A9cnico-100%25%20Frontend-brightgreen)
 
-First, run the development server:
+---
+
+## 🚀 Sobre o Projeto
+
+Este projeto é a interface frontend para a plataforma de assinatura digital de documentos, desenvolvida como desafio técnico. A aplicação oferece:
+
+- Interface intuitiva para upload de documentos PDF por administradores
+- Visualização e assinatura digital visual de documentos por usuários finais
+- Autenticação JWT e controle de sessões
+- Dashboard responsivo para gestão de documentos e assinaturas
+- Sistema de internacionalização (i18n)
+- Tema claro/escuro personalizável
+- Histórico completo de assinaturas realizadas
+
+> **Atenção:** Esta aplicação frontend precisa se conectar com a API backend para funcionar corretamente. Certifique-se de que o backend esteja rodando antes de iniciar o frontend.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- [Next.js 14](https://nextjs.org/) - Framework React
+- [React 18](https://reactjs.org/) - Biblioteca de interface
+- [TypeScript](https://www.typescriptlang.org/) - Tipagem estática
+- [Material-UI (MUI)](https://mui.com/) - Componentes de interface
+- [React Query](https://tanstack.com/query) - Gerenciamento de estado servidor
+- [React Hook Form](https://react-hook-form.com/) - Formulários
+- [i18next](https://www.i18next.com/) - Internacionalização
+- [PDF.js](https://mozilla.github.io/pdf.js/) - Visualização e manipulação de PDF
+
+---
+
+## 🏁 Como Começar
+
+1. **Clone o repositório:**
+
+  ```bash
+  git clone <repo-url>
+  cd sign-docs-front
+  ```
+
+2. **Instale as dependências:**
+
+  ```bash
+  yarn install
+  # ou npm install
+  ```
+
+3. **Configure o ambiente:**
+
+  - Copie o arquivo `.env.example` para `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+  - Configure a variável de ambiente com a URL da API:
+    ```env
+    NEXT_PUBLIC_API_BASE_URL=http://localhost:3250/api
+    ```
+
+4. **Certifique-se de que o backend está rodando:**
+  - O backend deve estar disponível na URL configurada (padrão: `http://localhost:3250`)
+  - Verifique se a API está respondendo corretamente
+
+5. **Inicie a aplicação:**
+
+  ```bash
+  yarn dev
+  # ou npm run dev
+  ```
+
+6. **Acesse a aplicação:**
+  - Abra o navegador em: [`http://localhost:3000`](http://localhost:3000)
+
+
+---
+
+## 🧪 Scripts Disponíveis
 
 ```bash
-npm run dev
-# or
+# Desenvolvimento
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build para produção
+yarn build
+
+# Executar versão de produção
+yarn start
+
+# Linting
+yarn lint
+
+# Testes (se configurados)
+yarn test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Autenticação e Autorização
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A aplicação utiliza:
 
-## Learn More
+- **JWT Tokens** para autenticação
+- **AuthContext** para gerenciamento de estado global
+- **AuthRouteGuard** para proteção de rotas
+- **Redirecionamento automático** baseado no tipo de usuário (admin/cliente)
+- **Persistência de sessão** com localStorage
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📱 Funcionalidades por Perfil
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 👤 **Usuários (Clientes)**
+- Login e cadastro na aplicação
+- Visualização de documentos disponíveis para assinatura
+- Interface de assinatura digital visual em PDF
+- Histórico pessoal de assinaturas realizadas
+- Download de documentos assinados
+- Perfil pessoal editável
 
-## Deploy on Vercel
+### 👨‍💼 **Administradores**
+- Todas as funcionalidades de usuário comum
+- Upload de novos documentos PDF
+- Gerenciamento completo de usuários
+- Visualização de todas as assinaturas do sistema
+- Dashboard administrativo avançado
+- Controle de acesso e permissões
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
