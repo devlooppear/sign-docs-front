@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Box, Typography } from "@mui/material";
 import systemColors from "@/common/constants/systemColors";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
+if (typeof window !== "undefined") {
+  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    "pdfjs-dist/build/pdf.worker.min.js",
+    import.meta.url
+  ).toString();
+}
 
 interface PdfSignerProps {
   url: string;
@@ -16,14 +19,15 @@ interface PdfSignerProps {
   width?: number;
 }
 
-export const PdfSigner: React.FC<PdfSignerProps> = ({
+const PdfSignerComponent: React.FC<PdfSignerProps> = ({
   url,
   onClick,
   width = 800,
 }) => {
   const [numPages, setNumPages] = useState<number>(0);
-
   const canvasRefs = useRef<Array<HTMLCanvasElement | null>>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(width);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,6 +37,18 @@ export const PdfSigner: React.FC<PdfSignerProps> = ({
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const newWidth = entry.contentRect.width;
+        setContainerWidth(Math.min(newWidth, width));
+      }
+    });
+    resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
   }, [width]);
 
   const handleLoadSuccess = (pdf: any) => setNumPages(pdf.numPages);
@@ -55,23 +71,6 @@ export const PdfSigner: React.FC<PdfSignerProps> = ({
         Number(yPercent.toFixed(2))
       );
     };
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>(width);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const newWidth = entry.contentRect.width;
-        setContainerWidth(Math.min(newWidth, width));
-      }
-    });
-
-    resizeObserver.observe(containerRef.current);
-    return () => resizeObserver.disconnect();
-  }, [width]);
 
   return (
     <Box ref={containerRef} sx={{ width: "100%", mx: "auto" }}>
@@ -134,3 +133,7 @@ export const PdfSigner: React.FC<PdfSignerProps> = ({
     </Box>
   );
 };
+
+export const PdfSigner = dynamic(() => Promise.resolve(PdfSignerComponent), {
+  ssr: false,
+});
