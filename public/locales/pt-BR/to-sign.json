@@ -1,0 +1,18 @@
+{
+	"title": "Upload de Documento",
+	"select_pdf": "Selecionar PDF",
+	"send_pdf": "Enviar PDF",
+	"sending": "Enviando...",
+	"success": "Arquivo enviado com sucesso!",
+	"error": "Erro ao enviar arquivo.",
+	"file_required": "Arquivo é obrigatório",
+	"file_type": "Somente arquivos PDF são permitidos",
+	"file_size": "Arquivo muito grande (máx. 10MB)",
+	"file_url": "URL do arquivo:"
+	,
+	"divider": "ou",
+	"upload_instruction": "Faça upload de um arquivo PDF para assinatura.",
+	"file_label": "Arquivo",
+	"file_name": "Nome do arquivo",
+	"remove_file": "Remover arquivo"
+}
