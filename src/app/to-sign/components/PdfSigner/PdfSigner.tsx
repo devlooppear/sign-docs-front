@@ -45,8 +45,10 @@ export const PdfSigner: React.FC<PdfSignerProps> = ({
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const xPercent = (x / rect.width) * 500;
-      const yPercent = (y / rect.height) * 100;
+
+      const xPercent = (x / rect.width) * 480;
+      const yPercent = ((rect.height - y) / rect.height) * 850;
+
       onClick(
         pageNumber,
         Number(xPercent.toFixed(2)),

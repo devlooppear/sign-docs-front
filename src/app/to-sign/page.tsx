@@ -15,6 +15,7 @@ import { UploadDocumentForm } from "./components/UploadDocumentForm/UploadDocume
 import { SignDocsSteps } from "@/enum/sign-docs";
 import { useAssignDocument } from "@/hooks/useAssignDocument/useAssignDocument";
 import { PdfSigner } from "./components/PdfSigner/PdfSigner";
+import { Done } from "./components/Done/Done";
 
 const STORAGE_KEY = "sign-docs-step";
 const DOCUMENT_STORAGE_KEY = "sign-docs-document";
@@ -23,15 +24,26 @@ interface SignaturePosition {
   page: number;
   x: number;
   y: number;
+  assinatura?: any;
+}
+
+interface DocumentType {
+  id: number;
+  url: string;
+  signedFilePath?: string;
+  signedUrl?: string;
 }
 
 const ToSignPage: React.FC = () => {
   const { t } = useTranslation("to-sign");
 
   const [step, setStep] = useState<SignDocsSteps>(SignDocsSteps.UPLOAD);
-  const [document, setDocument] = useState<any | null>(null);
+  const [document, setDocument] = useState<DocumentType | null>(null);
   const [signatures, setSignatures] = useState<SignaturePosition[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [documentAssign, setDocumentAssign] = useState<DocumentType | null>(
+    null
+  );
 
   useEffect(() => {
     try {
@@ -75,7 +87,22 @@ const ToSignPage: React.FC = () => {
     assignDocument(
       { documentId: document.id, page, x, y },
       {
-        onSuccess: () => {
+        onSuccess: (response: any) => {
+          const updatedDoc: DocumentType = {
+            ...document,
+            signedFilePath: response.file_path,
+            signedUrl: response.url,
+          };
+          setDocumentAssign(updatedDoc);
+
+          setSignatures((prev) =>
+            prev.map((sig) =>
+              sig.page === page && sig.x === x && sig.y === y
+                ? { ...sig, assinatura: response.assinatura }
+                : sig
+            )
+          );
+
           setStep(SignDocsSteps.DONE);
           localStorage.removeItem(STORAGE_KEY);
           localStorage.removeItem(DOCUMENT_STORAGE_KEY);
@@ -95,6 +122,7 @@ const ToSignPage: React.FC = () => {
   const handleRestart = () => {
     setStep(SignDocsSteps.UPLOAD);
     setDocument(null);
+    setDocumentAssign(null);
     setSignatures([]);
     setError(null);
     localStorage.removeItem(STORAGE_KEY);
@@ -118,7 +146,6 @@ const ToSignPage: React.FC = () => {
             >
               {t("signature_step")}
             </Typography>
-
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
               {t("click_to_sign_instructions")}
             </Typography>
@@ -174,31 +201,10 @@ const ToSignPage: React.FC = () => {
 
       case SignDocsSteps.DONE:
         return (
-          <Box sx={{ textAlign: "center", py: 4 }}>
-            <Typography
-              variant="h6"
-              color={systemColors.success}
-              sx={{ mb: 2 }}
-            >
-              {t("signature_success")}
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-              {t("document_signed_successfully")}
-            </Typography>
-            <button
-              onClick={handleRestart}
-              style={{
-                padding: 10,
-                backgroundColor: systemColors.indigo[600],
-                color: "white",
-                border: "none",
-                borderRadius: 4,
-                cursor: "pointer",
-              }}
-            >
-              {t("sign_another_document")}
-            </button>
-          </Box>
+          <Done
+            signedUrl={documentAssign?.signedUrl || ""}
+            onRestart={handleRestart}
+          />
         );
 
       default:

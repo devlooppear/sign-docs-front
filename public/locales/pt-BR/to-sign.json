@@ -1,5 +1,5 @@
 {
-  "title": "Upload de Documento",
+  "title": "Assinatura de Documento",
   "select_pdf": "Selecionar PDF",
   "send_pdf": "Enviar PDF",
   "sending": "Enviando...",
@@ -14,9 +14,21 @@
   "file_label": "Arquivo",
   "file_name": "Nome do arquivo",
   "remove_file": "Remover arquivo",
+
+  "signature_step": "Etapa de Assinatura",
+  "click_to_sign_instructions": "Clique no PDF para adicionar sua assinatura.",
+  "signatures_positioned": "Assinaturas posicionadas: {{count}}",
+  "page": "Página",
+  "processing_signature": "Processando assinatura...",
+  "document_not_found": "Documento não encontrado",
+  "signature_error": "Erro ao processar assinatura",
   "signature_success": "Assinatura realizada com sucesso!",
   "document_signed_successfully": "Documento assinado com sucesso.",
   "sign_another_document": "Assinar outro documento",
-  "signature_step": "Etapa de Assinatura",
-  "click_to_sign_instructions": "Clique no PDF para adicionar sua assinatura."
+
+  "done_title": "Documento assinado com sucesso!",
+  "done_description": "Veja o documento assinado abaixo ou faça o download.",
+  "done_iframe_title": "PDF Assinado",
+  "done_button_fullscreen": "Ver em Tela Cheia",
+  "done_button_restart": "Assinar outro documento"
 }
