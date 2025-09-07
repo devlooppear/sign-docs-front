@@ -52,18 +52,6 @@ const HomePage: React.FC = () => {
             ),
           },
           {
-            label: t("dashboard.label", "Painel"),
-            route: Routes.DASHBOARD,
-            description: t(
-              "dashboard.description",
-              "Acompanhe métricas e informações importantes do sistema."
-            ),
-            buttonLabel: t("dashboard.buttonLabel", "Ir ao Painel"),
-            icon: (
-              <FaTachometerAlt size={40} color={systemColors.indigo[700]} />
-            ),
-          },
-          {
             label: t("documents.label", "Meus Documentos"),
             route: Routes.DOCUMENT,
             description: t(
