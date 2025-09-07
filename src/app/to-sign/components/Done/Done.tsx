@@ -45,8 +45,10 @@ export const Done: React.FC<DoneProps> = ({ signedUrl, onRestart }) => {
       <Button
         variant="contained"
         color="primary"
+        component="a"
         href={signedUrl}
-        download
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{ mr: 2 }}
       >
         {t("done_button_fullscreen")}
