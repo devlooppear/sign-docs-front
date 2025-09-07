@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import systemColors from "@/common/constants/systemColors";
 import { StyledCard } from "@/components/StyledCard/StyledCard";
 import { UploadDocumentForm } from "./components/UploadDocumentForm/UploadDocumentForm";
-import { SignDocsSteps } from "@/enum/sign-docs";
+import { SignDocsSteps } from "@/enum/signDocs";
 import { useAssignDocument } from "@/hooks/useAssignDocument/useAssignDocument";
 import { PdfSigner } from "./components/PdfSigner/PdfSigner";
 import { Done } from "./components/Done/Done";

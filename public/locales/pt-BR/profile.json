@@ -1,0 +1,10 @@
+{
+  "title": "Perfil do Usuário",
+  "name": "Nome",
+  "email": "Email",
+  "role": "Função",
+  "person_type": "Tipo de Pessoa",
+  "document_number": "Documento",
+  "created_at": "Criado em",
+  "load_error": "Erro ao carregar dados do usuário."
+}

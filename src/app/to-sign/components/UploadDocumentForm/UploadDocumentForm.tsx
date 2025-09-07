@@ -9,7 +9,7 @@ import StyledButton from "@/components/StyledButton/StyledButton";
 import { useUploadDocument } from "@/hooks/useUploadDocument/useUploadDocument";
 import { useTranslation } from "react-i18next";
 import { StyledFileSelect } from "@/components/StyledFileSelect/StyledFileSelect";
-import { SignDocsSteps } from "@/enum/sign-docs";
+import { SignDocsSteps } from "@/enum/signDocs";
 
 type FormValues = {
   file: FileList | null;

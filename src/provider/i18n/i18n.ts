@@ -14,6 +14,7 @@ const DEFAULT_NAMESPACES = [
   "login",
   "register",
   "to-sign",
+  "profile",
 ];
 
 i18n
