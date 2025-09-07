@@ -1,0 +1,18 @@
+{
+  "title": "Dashboard",
+  "charts": {
+    "documentsByStatus": "Documentos por Status"
+  },
+  "metrics": {
+    "totalDocuments": "Total de Documentos",
+    "signedDocuments": "Documentos Assinados",
+    "availableDocuments": "Documentos Disponíveis"
+  },
+  "status": {
+    "signed": "Assinado",
+    "available": "Disponível"
+  },
+  "actions": {
+    "exportCSV": "Exportar CSV"
+  }
+}
